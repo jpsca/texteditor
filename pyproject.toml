@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "TextEditor"
+version = "1.0.0"
+description = "Like webbrowser for text editors"
+authors = [
+    "Juan-Pablo Scaletti <juanpablo@jpscaletti.com>"
+]
+license = "MIT"
+
+readme = "README.md"
+
+homepage = "https://github.com/jpscaletti/texteditor"
+repository = "https://github.com/jpscaletti/texteditor"
+documentation = "https://github.com/jpscaletti/texteditor"
+
+keywords = ["editor", "text editor", "webbrowser"]
+
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Development Status :: 5 - Production",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+]
+
+# Requirements
+[tool.poetry.dependencies]
+python = "^3.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.0"
+pytest-cov = "^2.6"
+tox = "^3.6"
