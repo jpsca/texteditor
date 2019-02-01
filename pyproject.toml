@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "TextEditor"
+name = "Text-Editor"
 version = "1.0.0"
 description = "Like webbrowser, but for the text editor"
 authors = [
@@ -23,6 +23,10 @@ classifiers = [
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
+]
+
+packages = [
+    { include = "texteditor.py" },
 ]
 
 # Requirements

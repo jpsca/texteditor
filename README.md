@@ -30,9 +30,10 @@ is raised.
 Using `pip` of course!
 
 ```
-pip install texteditor
+pip install text-editor
 ```
 
+*Note that the name of the library has a dash: text**-**editor*
 
 ## Usage
 
