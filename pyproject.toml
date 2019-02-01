@@ -16,11 +16,10 @@ documentation = "https://github.com/jpscaletti/texteditor"
 keywords = ["editor", "text editor", "webbrowser"]
 
 classifiers = [
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Development Status :: 5 - Production",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
