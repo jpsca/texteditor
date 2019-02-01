@@ -3,6 +3,7 @@
 """
 import io
 import os
+import pkg_resources
 import re
 import sys
 import subprocess
@@ -11,7 +12,7 @@ import tempfile
 from distutils.spawn import find_executable
 
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 EDITOR = 'EDITOR'
 
@@ -48,7 +49,7 @@ LINUX_EDITORS = COMMON_EDITORS + [
 ] + THE_GREY_ONES
 
 WINDOWS_EDITORS = COMMON_EDITORS + THE_GREY_ONES + [
-    r'C:\Program Files (x86)\Notepad++\notepad++.exe',
+    'notepad++.exe',
     'notepad.exe',
 ]
 
@@ -68,11 +69,10 @@ def get_possible_editors():
 
     return COMMON_EDITORS + THE_GREY_ONES
 
-
 def split_editor_cmd(cmd):
-    """Split by spaces unless escaped.
+    r"""Split by spaces unless escaped.
 
-    >>> split_editor_cmd('my\\ editor --wait')
+    >>> split_editor_cmd(r'my\ editor --wait')
     ['my\\ editor', '--wait']
     """
     return re.split(r'(?<!\\)\s+', cmd)
