@@ -26,6 +26,7 @@ wheels/
 MANIFEST
 *.manifest
 *.spec
+pip-wheel-metadata
 
 # Installer logs
 pip-log.txt
