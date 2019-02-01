@@ -1,20 +1,24 @@
 # TextEditor
 
+*Like [webbrowser](https://docs.python.org/3.7/library/webbrowser.html) but for the text editor.*
+
 Programmatically open the system's editor from your Python program.
-Is like `webbrowser` but for text editors.
 
 ```python
 import texteditor
 
-text = texteditor.open('This is the default content')
+text = texteditor.open('This is the starting content')
 ```
 
 Opens a temporary file with some content to edit, and returns the new content when
 the user closes the editor.
 
 ```python
-text = texteditor.open(file='README.md')
-# texteditor.open(b"This'll overwrite the former content!", file='README.md')
+text = texteditor.open(filename='README.md')
+
+# text = texteditor.open(
+#     "This will be used instead of the file content", filename='README.md'
+# )
 ```
 
 You can also edit an existing text file. If the file cannot be opened, an `OSError`
@@ -32,22 +36,22 @@ pip install texteditor
 
 ## Usage
 
-*texteditor*.**open**(text=None, file=None, suffix=None, encoding=None)
+*texteditor*.**open**(text=None, filename=None, extension='txt', encoding=None)
 
-Opens `file` or a new temporary file in the default editor.
+Opens `filename` or a new temporary file in the default editor.
 
 - *text*:
-    The content for the edited file. This will also be used instead of the
-    original contents of `file` if one is also defined.
+    The starting content for the edited file. This will also be used instead of the
+    original contents of `filename` if one is also defined.
 
-- *file*:
+- *filename*:
     Edit this file instead of a new temporary one.
 
-- *suffix*:
+- *extension*:
     When editing a new temporary file, this will help the editor recognize the
     intended filetype, so syntax highlighting and custom settings for that
-    filetype can be used.
-    Ignored if `file` is defined.
+    filetype can be used. Examples: `txt`, `md`, `ini`.
+    Ignored if `filename` is used.
 
 - *encoding*:
     To encode the content and decode the result, `texteditor.open()` uses the default
@@ -60,8 +64,8 @@ Opens `file` or a new temporary file in the default editor.
 `texteditor.open()` first looks for the `$EDITOR` environment variable. If set, it uses
 the value as-is, including any command-line argument, without fallbacks.
 
-If no `$EDITOR` is set, the function will search through a list of known editors, and
-use the first one that founds on the system.
+If no `$EDITOR` is set, the function will search through a *very short* list of known
+editors, and use the first one that founds on the system.
 
 
 ## Contribute
@@ -78,5 +82,5 @@ poetry install
 After that, to run the tests, use:
 
 ```
-pytest .
+pytest tests.py
 ```

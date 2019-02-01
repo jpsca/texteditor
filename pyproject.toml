@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "TextEditor"
 version = "1.0.0"
-description = "Like webbrowser for text editors"
+description = "Like webbrowser, but for the text editor"
 authors = [
     "Juan-Pablo Scaletti <juanpablo@jpscaletti.com>"
 ]
@@ -32,5 +32,4 @@ python = "^3.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"
-pytest-cov = "^2.6"
 tox = "^3.6"
