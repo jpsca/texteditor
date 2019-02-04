@@ -3,7 +3,6 @@
 """
 import io
 import os
-import pkg_resources
 import re
 import sys
 import subprocess
@@ -16,15 +15,21 @@ __version__ = '1.0.1'
 
 EDITOR = 'EDITOR'
 
+"""Why not include vim or emacs? Because:
+
+1. If you are using it, you know what the EDITOR variable is, and you
+probably has set it already.it
+
+2. If you aren't using it, finding yourself in their UI for the first time
+is going to be super confusing, in fact "How to exit vim" is a common
+Stack Overflow question. Having to google how to set an EDITOR variable is a
+less scary alternative.
+
+"""
 COMMON_EDITORS = [
     'subl',
     'vscode',
     'atom',
-]
-
-THE_GREY_ONES = [
-    'vim',
-    'emacs',
 ]
 
 MACOS_EDITORS = [
@@ -34,7 +39,7 @@ MACOS_EDITORS = [
     '/Applications/Atom.app/Contents/Resources/app/atom.sh',
     '/Applications/TextMate.app/Contents/Resources/mate',
     '/Applications/Brackets.app/Contents/Resources/brackets.sh',
-] + COMMON_EDITORS + THE_GREY_ONES + [
+] + COMMON_EDITORS + [
     '/Applications/TextEdit.app/Contents/MacOS/TextEdit',
 ]
 
@@ -46,9 +51,9 @@ LINUX_EDITORS = COMMON_EDITORS + [
     'geany',
     'gedit',
     'nano',
-] + THE_GREY_ONES
+]
 
-WINDOWS_EDITORS = COMMON_EDITORS + THE_GREY_ONES + [
+WINDOWS_EDITORS = COMMON_EDITORS + [
     'notepad++.exe',
     'notepad.exe',
 ]
@@ -67,7 +72,8 @@ def get_possible_editors():
         if sys_platform.startswith(platform):
             return EDITORS[platform]
 
-    return COMMON_EDITORS + THE_GREY_ONES
+    return COMMON_EDITORS
+
 
 def split_editor_cmd(cmd):
     r"""Split by spaces unless escaped.
