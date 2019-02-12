@@ -11,7 +11,7 @@ import tempfile
 from distutils.spawn import find_executable
 
 
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 EDITOR = 'EDITOR'
 
