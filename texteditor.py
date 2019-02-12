@@ -11,36 +11,28 @@ import tempfile
 from distutils.spawn import find_executable
 
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 EDITOR = 'EDITOR'
 
-"""Why not include vim or emacs? Because:
+MACOS_EDITORS = [
+    # The -t flag make MacOS open the default *editor* for the file
+    'open -t',
+]
 
-1. If you are using it, you know what the EDITOR variable is, and you
-probably has set it already.it
-
-2. If you aren't using it, finding yourself in their UI for the first time
-is going to be super confusing, in fact "How to exit vim" is a common
-Stack Overflow question. Having to google how to set an EDITOR variable is a
-less scary alternative.
-
-"""
+# I'm NOT including vim or emacs in this list because:
+#
+# 1. If you are using it, you know what the EDITOR variable is, and you
+# probably has set it already.
+#
+# 2. If you aren't using it, finding yourself in their UI for the first time
+# is going to be super confusing, in fact "How to exit vim" is a common
+# Stack Overflow question. Having to google how to set an EDITOR variable is a
+# less scary alternative.
 COMMON_EDITORS = [
     'subl',
     'vscode',
     'atom',
-]
-
-MACOS_EDITORS = [
-    # Only in MacOS, the "shell commands" are not installed by default
-    '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
-    '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code',
-    '/Applications/Atom.app/Contents/Resources/app/atom.sh',
-    '/Applications/TextMate.app/Contents/Resources/mate',
-    '/Applications/Brackets.app/Contents/Resources/brackets.sh',
-] + COMMON_EDITORS + [
-    '/Applications/TextEdit.app/Contents/MacOS/TextEdit',
 ]
 
 # In some linuxes `vim` and/or `emacs` come preinstalled, but we don't want
@@ -91,7 +83,7 @@ def get_editor():
 
     editors = get_possible_editors()
     for cmd in editors:
-        binpath = find_executable(cmd)
+        binpath = find_executable(split_editor_cmd(cmd)[0])
         if binpath:
             return [binpath]
 

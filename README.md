@@ -16,9 +16,7 @@ the user closes the editor.
 ```python
 text = texteditor.open(filename='README.md')
 
-# text = texteditor.open(
-#     "This will be used instead of the file content", filename='README.md'
-# )
+# text = texteditor.open("This will be used instead of the file content", filename='README.md')
 ```
 
 You can also edit an existing text file. If the file cannot be opened, an `OSError`

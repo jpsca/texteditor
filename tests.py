@@ -88,15 +88,11 @@ def test_use_filename():
 def test_get_editor():
     os.environ[EDITOR] = ''
 
-    def find_subl_first(editor):
-        if editor == 'emacs':
-            return '/path/to/emacs'
-        if editor == 'subl':
-            return '/path/to/subl'
-        return None
+    def find_subl(_):
+        return '/path/to/subl'
 
     _find_executable = texteditor.find_executable
-    texteditor.find_executable = find_subl_first
+    texteditor.find_executable = find_subl
     _run = texteditor.run
     texteditor.run = MagicMock()
 
