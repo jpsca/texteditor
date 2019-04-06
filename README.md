@@ -78,8 +78,7 @@ You might notice that vim and Emacs are not in that short list, that's because:
 
 ## Contribute
 
-This might have notice this project does not have a `setup.py` file.
-It uses a new-standard `pyproject.toml` config file and [Poetry](https://poetry.eustace.io/)
+This project does not have a `setup.py` file. Instead, it uses a new-standard `pyproject.toml` config file and [Poetry](https://poetry.eustace.io/)
 to manage its dependencies. This will create and use a `virtualenv` environment for
 this specific project (read more about it in its [Poetry documentation](https://poetry.eustace.io/docs/cli/#install)).
 
