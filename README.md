@@ -69,7 +69,7 @@ On MacOS, it calls the system default for *editing* that file extension.
 In other operating systems, the function will search through a *very short* list of known editors, and use the
 first one that founds.
 
-You migth have noticed vim and Emacs are not in that short list. That's because:
+You might notice that vim and Emacs are not in that short list, that's because:
 
 1. If you are using it, you know what the `EDITOR` variable is, and you probably has set it already.
 2. If you aren't using it, finding yourself in their UI for the first time is going to be super confusing.
