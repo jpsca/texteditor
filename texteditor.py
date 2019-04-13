@@ -3,6 +3,7 @@
 """
 import io
 import os
+import pkg_resources
 import re
 import sys
 import subprocess
@@ -11,7 +12,7 @@ import tempfile
 from distutils.spawn import find_executable
 
 
-__version__ = '1.0.3'
+__version__ = pkg_resources.require("texteditor")[0].version
 
 EDITOR = 'EDITOR'
 
@@ -103,6 +104,7 @@ def run(cmd):
 def open(text=None, filename=None, extension='txt', encoding=None):
     cmd = get_editor()
 
+    tmp = None
     if filename is None:
         suffix = '.' + extension.strip('.')
         tmp = tempfile.NamedTemporaryFile(suffix=suffix)
@@ -117,6 +119,13 @@ def open(text=None, filename=None, extension='txt', encoding=None):
 
     with io.open(filename, mode='rt', encoding=encoding) as file:
         return file.read()
+
+    if tmp is not None:
+        # Delete the temporary file for security reasons
+        try:
+            os.remove(tmp.name)
+        except OSError:
+            pass
 
 
 def cli():

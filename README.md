@@ -30,7 +30,7 @@ Using `pip` of course!
 pip install text-editor
 ```
 
-*Note that the name of the library has a dash: text**-**editor*
+*Note that [the name of the library in PyPi has a dash: text**-**editor](https://github.com/pypa/warehouse/issues/5376).*
 
 ## Usage
 
@@ -76,18 +76,3 @@ You might notice that vim and Emacs are not in that short list, that's because:
    In fact "How to exit vim" is a common Stack Overflow question. Having to google how to set an EDITOR
    variable is a less scary alternative.
 
-## Contribute
-
-This project does not have a `setup.py` file. Instead, it uses a new-standard `pyproject.toml` config file and [Poetry](https://poetry.eustace.io/)
-to manage its dependencies. This will create and use a `virtualenv` environment for
-this specific project (read more about it in its [Poetry documentation](https://poetry.eustace.io/docs/cli/#install)).
-
-```
-poetry install
-```
-
-After that, to run the tests, use:
-
-```
-pytest tests.py
-```
