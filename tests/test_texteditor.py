@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from texteditor import EDITOR
-import texteditor
+from texteditor import main as texteditor
 
 
 def test_EDITOR_used():

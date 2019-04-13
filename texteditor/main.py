@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-"""
-"""
 import io
 import os
-import pkg_resources
 import re
 import sys
 import subprocess
@@ -11,8 +7,6 @@ import tempfile
 
 from distutils.spawn import find_executable
 
-
-__version__ = pkg_resources.require("texteditor")[0].version
 
 EDITOR = 'EDITOR'
 
@@ -156,7 +150,3 @@ def cli():
     if 'cmd' in kwargs:
         cmd = kwargs.pop('cmd')
         print(cmd(**kwargs))
-
-
-if __name__ == '__main__':
-    cli()

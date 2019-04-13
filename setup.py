@@ -8,7 +8,7 @@ HERE = Path(__file__).parent.resolve()
 
 setup(
     name="text-editor",
-    version="1.0.4",
+    version="1.0.5",
     description="Like webbrowser, but for the text editor.",
     long_description=(HERE / "README.md").read_text(),
     long_description_content_type="text/markdown",
@@ -18,10 +18,7 @@ setup(
     url="https://github.com/jpscaletti/texteditor",
     # install_requires=[],
     license="MIT",
-    # packages=find_packages(exclude=["tests"]),
-    # If your package is a single module, use this instead of "packages":
-    py_modules=["texteditor"],
-    include_package_data=True,
+    packages=find_packages(exclude=["tests"]),
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers

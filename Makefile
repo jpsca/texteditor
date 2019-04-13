@@ -24,10 +24,10 @@ clean-pyc:
 	find . -name '*.egg-info' -exec rm -rf {} +
 
 test:
-	pytest -x texteditor.py tests.py
+	pytest -x texteditor tests
 
 flake:
-	flake8 --config=setup.cfg texteditor.py tests.py
+	flake8 --config=setup.cfg texteditor tests
 
 install:
 	pip install -e .
