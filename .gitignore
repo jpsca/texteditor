@@ -1,9 +1,7 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
 
 # Distribution / packaging
@@ -24,41 +22,13 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-*.manifest
-*.spec
-pip-wheel-metadata
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Sphinx documentation
-docs/_build/
 
 # Environments
 .env
 .venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+covreport
+pip-wheel-metadata
+.tox
 
 # mkdocs documentation
 /site
