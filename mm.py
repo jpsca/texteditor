@@ -29,6 +29,7 @@ data = {
 
     "coverage_omit": [],
 
+    "copyright": "2019",
     "has_docs": False,
     "docs_nav": [],  # Overwritten by `save_current_nav`.
 }
