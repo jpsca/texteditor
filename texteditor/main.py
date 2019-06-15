@@ -8,11 +8,11 @@ import tempfile
 from distutils.spawn import find_executable
 
 
-EDITOR = 'EDITOR'
+EDITOR = "EDITOR"
 
 MACOS_EDITORS = [
     # The -t flag make MacOS open the default *editor* for the file
-    'open -t',
+    "open -t"
 ]
 
 # I'm NOT including vim or emacs in this list because:
@@ -24,32 +24,16 @@ MACOS_EDITORS = [
 # is going to be super confusing, in fact "How to exit vim" is a common
 # Stack Overflow question. Having to google how to set an EDITOR variable is a
 # less scary alternative.
-COMMON_EDITORS = [
-    'subl',
-    'vscode',
-    'atom',
-]
+COMMON_EDITORS = ["subl", "vscode", "atom"]
 
 # In some linuxes `vim` and/or `emacs` come preinstalled, but we don't want
 # to throw you to their unfamiliar UI unless there are other options.
 # If you are using them you probably have set your $EDITOR variable anyway.
-LINUX_EDITORS = COMMON_EDITORS + [
-    'kate',
-    'geany',
-    'gedit',
-    'nano',
-]
+LINUX_EDITORS = COMMON_EDITORS + ["kate", "geany", "gedit", "nano"]
 
-WINDOWS_EDITORS = COMMON_EDITORS + [
-    'notepad++.exe',
-    'notepad.exe',
-]
+WINDOWS_EDITORS = COMMON_EDITORS + ["notepad++.exe", "notepad.exe"]
 
-EDITORS = {
-    'darwin': MACOS_EDITORS,
-    'linux': LINUX_EDITORS,
-    'win': WINDOWS_EDITORS,
-}
+EDITORS = {"darwin": MACOS_EDITORS, "linux": LINUX_EDITORS, "win": WINDOWS_EDITORS}
 
 
 def get_possible_editors():
@@ -68,7 +52,7 @@ def split_editor_cmd(cmd):
     >>> split_editor_cmd(r'my\ editor --wait')
     ['my\\ editor', '--wait']
     """
-    return re.split(r'(?<!\\)\s+', cmd)
+    return re.split(r"(?<!\\)\s+", cmd)
 
 
 def get_editor():
@@ -84,8 +68,7 @@ def get_editor():
 
     # You might only see this error on Linux
     raise RuntimeError(
-        'Unable to find a text editor. '
-        'Please set your $EDITOR environment variable.'
+        "Unable to find a text editor. Please set your $EDITOR environment variable."
     )
 
 
@@ -95,23 +78,23 @@ def run(cmd):
     proc.communicate()
 
 
-def open(text=None, filename=None, extension='txt', encoding=None):
+def open(text=None, filename=None, extension="txt", encoding=None):
     cmd = get_editor()
 
     tmp = None
     if filename is None:
-        suffix = '.' + extension.strip('.')
+        suffix = "." + extension.strip(".")
         tmp = tempfile.NamedTemporaryFile(suffix=suffix)
         filename = tmp.name
 
     if text is not None:
-        with io.open(filename, mode='wt', encoding=encoding) as file:
+        with io.open(filename, mode="wt", encoding=encoding) as file:
             file.write(text)
 
     cmd += [filename]
     run(cmd)
 
-    with io.open(filename, mode='rt', encoding=encoding) as file:
+    with io.open(filename, mode="rt", encoding=encoding) as file:
         return file.read()
 
     if tmp is not None:
@@ -124,29 +107,42 @@ def open(text=None, filename=None, extension='txt', encoding=None):
 
 def cli():
     import argparse
+
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
-    open_parser = subparsers.add_parser('open', help='Open a file to edit')
+    open_parser = subparsers.add_parser("open", help="Open a file to edit")
     open_parser.set_defaults(cmd=open)
     open_parser.add_argument(
-        '--text', type=str, nargs='?', required=False,
-        help='The starting content for the edited file.'
+        "--text",
+        type=str,
+        nargs="?",
+        required=False,
+        help="The starting content for the edited file.",
     )
     open_parser.add_argument(
-        '--filename', type=str, nargs='?', required=False,
-        help='Edit this file instead of creating a temporary one'
+        "--filename",
+        type=str,
+        nargs="?",
+        required=False,
+        help="Edit this file instead of creating a temporary one",
     )
     open_parser.add_argument(
-        '--extension', type=str, nargs='?', required=False,
-        help='Use this extension for the temporary file'
+        "--extension",
+        type=str,
+        nargs="?",
+        required=False,
+        help="Use this extension for the temporary file",
     )
     open_parser.add_argument(
-        '--encoding', type=str, nargs='?', required=False,
-        help='Use this encoding instead of the platform default'
+        "--encoding",
+        type=str,
+        nargs="?",
+        required=False,
+        help="Use this encoding instead of the platform default",
     )
 
     kwargs = vars(parser.parse_args())
-    if 'cmd' in kwargs:
-        cmd = kwargs.pop('cmd')
+    if "cmd" in kwargs:
+        cmd = kwargs.pop("cmd")
         print(cmd(**kwargs))
