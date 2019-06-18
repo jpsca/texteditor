@@ -7,9 +7,6 @@ Read more about it at https://github.com/jpscaletti/mastermold/
 """
 from pathlib import Path
 
-import copier
-from ruamel.yaml import YAML
-
 
 data = {
     "title": "TextEditor",
@@ -19,51 +16,66 @@ data = {
     "author": "Juan-Pablo Scaletti",
     "author_email": "juanpablo@jpscaletti.com",
     "description": "Like webbrowser, but for the text editor.",
+    "copyright": "2019",
     "repo_name": "jpscaletti/texteditor",
     "home_url": "",
-    "docs_url": "",
+    "project_urls": {
+    },
     "development_status": "5 - Production/Stable",
-    "install_requires": [],
-    "entry_points": "",
     "minimal_python": 3.5,
+    "install_requires": [
+    ],
+    "testing_requires": [
+        "pytest",
+    ],
+    "development_requires": [
+        "tox",
+        "flake8",
+    ],
+    "entry_points": "",
 
     "coverage_omit": [],
 
-    "copyright": "2019",
     "has_docs": False,
-    "docs_nav": [],  # Overwritten by `save_current_nav`.
+    "google_analytics": "UA-XXXXXXXX-X",
+    "docs_nav": [],
 }
 
+exclude = [
+    "copier.yml",
+    "README.md",
+    ".git",
+    ".git/*",
+    ".venv",
+    ".venv/*",
 
-def save_current_nav():
-    yaml = YAML()
-    mkdocs_path = Path("docs") / "mkdocs.yml"
-    if not mkdocs_path.exists():
-        return
-    mkdocs = yaml.load(mkdocs_path)
-    data["docs_nav"] = mkdocs.get("nav")
+    "CONTRIBUTING.md",
+    "docs",
+    "docs/*",
+]
 
 
 def do_the_thing():
+    import copier
+    from ruamel.yaml import YAML
+
+    def save_current_nav():
+        yaml = YAML()
+        mkdocs_path = Path("docs") / "mkdocs.yml"
+        if not mkdocs_path.exists():
+            return
+        mkdocs = yaml.load(mkdocs_path)
+        data["docs_nav"] = mkdocs.get("nav")
+
     if data["has_docs"]:
         save_current_nav()
 
     copier.copy(
-        "gh:jpscaletti/mastermold.git",
+        # "gh:jpscaletti/mastermold.git",
+        "../mastermold",  # Path to the local copy of Master Mold
         ".",
         data=data,
-        exclude=[
-            "copier.yml",
-            "README.md",
-            ".git",
-            ".git/*",
-            ".venv",
-            ".venv/*",
-
-            "docs",
-            "docs/*",
-            "CONTRIBUTING.md",
-        ],
+        exclude=exclude,
         force=True,
         cleanup_on_error=False
     )

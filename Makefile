@@ -14,7 +14,7 @@ clean-build:
 	rm -rf dist/
 	rm -rf *.egg-info
 	rm -rf pip-wheel-metadata
-	rm *.egg-info
+	rm -rf *.egg-info
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -24,15 +24,13 @@ clean-pyc:
 	find . -name '.pytest_cache' -exec rm -rf {} +
 
 test:
-	pytest -x .
+	pytest -x texteditor tests
 
 flake:
-	flake8 --config=setup.cfg .
+	flake8 --config=setup.cfg texteditor tests
 
 coverage:
-	pytest --cov-report html --cov texteditor .
+	pytest --cov-report html --cov texteditor texteditor tests
 
 install:
-	pip install -e .
-	pip install .[docs]
-	pip install .[testing]
+	pip install -e .[dev]
