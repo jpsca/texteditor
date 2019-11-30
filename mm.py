@@ -7,7 +7,7 @@ data = {
     "title": "TextEditor",
     "name": "texteditor",
     "pypi_name": "texteditor",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "author": "Juan-Pablo Scaletti",
     "author_email": "juanpablo@jpscaletti.com",
     "description": "Like webbrowser, but for the text editor.",
