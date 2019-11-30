@@ -27,10 +27,8 @@ You can also edit an existing text file. If the file cannot be opened, an `OSErr
 Using `pip` of course!
 
 ```
-pip install text-editor
+python -m pip install texteditor
 ```
-
-*Note that [the name of the library in PyPi has a dash: text**-**editor](https://github.com/pypa/warehouse/issues/5376).*
 
 ## Usage
 

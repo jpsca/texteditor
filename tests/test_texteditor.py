@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from ..texteditor import EDITOR
-from ..texteditor import main as texteditor
+from texteditor import EDITOR
+from texteditor import main as texteditor
 
 
 def test_EDITOR_used():
