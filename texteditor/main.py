@@ -10,11 +10,6 @@ from distutils.spawn import find_executable
 
 EDITOR = "EDITOR"
 
-MACOS_EDITORS = [
-    # The -t flag make MacOS open the default *editor* for the file
-    "open -t"
-]
-
 # I'm NOT including vim or emacs in this list because:
 #
 # 1. If you are using it, you know what the EDITOR variable is, and you
@@ -24,14 +19,31 @@ MACOS_EDITORS = [
 # is going to be super confusing, in fact "How to exit vim" is a common
 # Stack Overflow question. Having to google how to set an EDITOR variable is a
 # less scary alternative.
-COMMON_EDITORS = ["subl", "vscode", "atom"]
+COMMON_EDITORS = [
+    "code --new-window --wait",
+    "subl --new-window --wait"
+    "atom --new-window --wait",
+]
 
-# In some linuxes `vim` and/or `emacs` come preinstalled, but we don't want
-# to throw you to their unfamiliar UI unless there are other options.
-# If you are using them you probably have set your $EDITOR variable anyway.
-LINUX_EDITORS = COMMON_EDITORS + ["kate", "geany", "gedit", "nano"]
+MACOS_EDITORS = COMMON_EDITORS + [
+    # The -t flag make MacOS open the default *editor* for the file
+    "open -t --new --wait-apps",
+]
 
-WINDOWS_EDITORS = COMMON_EDITORS + ["notepad++.exe", "notepad.exe"]
+LINUX_EDITORS = COMMON_EDITORS + [
+    "geany -imnst",
+    "gedit -s",
+    "nano",
+]
+
+WINDOWS_EDITORS = COMMON_EDITORS + [
+    r"C:/Program\ Files\ (x86)/sublime\ text\ 3/subl.exe --new-window --wait",
+    "notepad++.exe -multiInst -notabbar -nosession -noPlugin",
+    (
+        r"C:/Program\ Files\ (x86)/Notepad++/notepad++.exe"
+        " -multiInst -notabbar -nosession -noPlugin"
+    ),
+]
 
 EDITORS = {"darwin": MACOS_EDITORS, "linux": LINUX_EDITORS, "win": WINDOWS_EDITORS}
 
@@ -62,9 +74,10 @@ def get_editor():
 
     editors = get_possible_editors()
     for cmd in editors:
-        binpath = find_executable(split_editor_cmd(cmd)[0])
+        splitcmd = split_editor_cmd(cmd)
+        binpath = find_executable(splitcmd[0])
         if binpath:
-            return [binpath]
+            return splitcmd
 
     # You might only see this error on Linux
     raise RuntimeError(

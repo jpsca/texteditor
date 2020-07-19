@@ -86,23 +86,12 @@ def test_use_filename():
 
 def test_get_editor():
     os.environ[EDITOR] = ""
-
-    def find_subl(_):
-        return "/path/to/subl"
-
-    _find_executable = texteditor.find_executable
-    texteditor.find_executable = find_subl
-    _run = texteditor.run
     texteditor.run = MagicMock()
-
     texteditor.open()
 
     args, kw = texteditor.run.call_args
     cmd = args[0]
-    assert cmd[0] == "/path/to/subl"
-
-    texteditor.find_executable = _find_executable
-    texteditor.run = _run
+    assert cmd[0] == "code"
 
 
 def test_no_editor_available():
