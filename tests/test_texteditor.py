@@ -106,7 +106,7 @@ def test_get_editor():
 
     args, kw = texteditor.run.call_args
     cmd = args[0]
-    assert cmd[0] == "code"
+    assert cmd[0]
 
 
 def test_no_editor_available():
