@@ -1,9 +1,9 @@
-import io
 import os
-import re
+import shlex
 import sys
 import subprocess
 import tempfile
+from pathlib import Path
 
 from distutils.spawn import find_executable
 
@@ -37,10 +37,10 @@ LINUX_EDITORS = COMMON_EDITORS + [
 ]
 
 WINDOWS_EDITORS = COMMON_EDITORS + [
-    r"C:/Program\ Files\ (x86)/sublime\ text\ 3/subl.exe --new-window --wait",
+    '"C:/Program Files (x86)/sublime text 3/subl.exe" --new-window --wait',
     "notepad++.exe -multiInst -notabbar -nosession -noPlugin",
     (
-        r"C:/Program\ Files\ (x86)/Notepad++/notepad++.exe"
+        '"C:/Program Files (x86)/Notepad++/notepad++.exe"'
         " -multiInst -notabbar -nosession -noPlugin"
     ),
 ]
@@ -58,23 +58,14 @@ def get_possible_editors():
     return COMMON_EDITORS
 
 
-def split_editor_cmd(cmd):
-    r"""Split by spaces unless escaped.
-
-    >>> split_editor_cmd(r'my\ editor --wait')
-    ['my\\ editor', '--wait']
-    """
-    return re.split(r"(?<!\\)\s+", cmd)
-
-
 def get_editor():
     cmd = os.getenv(EDITOR)
     if cmd:
-        return split_editor_cmd(cmd)
+        return shlex.split(cmd)
 
     editors = get_possible_editors()
     for cmd in editors:
-        splitcmd = split_editor_cmd(cmd)
+        splitcmd = shlex.split(cmd)
         binpath = find_executable(splitcmd[0])
         if binpath:
             return splitcmd
@@ -94,28 +85,37 @@ def run(cmd):
 def open(text=None, filename=None, extension="txt", encoding=None):
     cmd = get_editor()
 
-    tmp = None
     if filename is None:
         suffix = "." + extension.strip(".")
-        tmp = tempfile.NamedTemporaryFile(suffix=suffix)
-        filename = tmp.name
+    else:
+        filename = Path(filename)
+        suffix = "-" + filename.name
+        if text is None:
+            text = filename.read_text(encoding=encoding)
 
+    temp = get_temp(suffix)
     if text is not None:
-        with io.open(filename, mode="wt", encoding=encoding) as file:
-            file.write(text)
+        temp.write_text(text, encoding=encoding)
 
-    cmd += [filename]
+    cmd += [str(temp)]
     run(cmd)
 
-    with io.open(filename, mode="rt", encoding=encoding) as file:
-        return file.read()
+    result = temp.read_text(encoding=encoding)
+    if filename:
+        filename.write_text(result, encoding=encoding)
+    try:
+        temp.unlink()
+    except FileNotFoundError:
+        pass
+    return result
 
-    if tmp is not None:
-        # Delete the temporary file for security reasons
-        try:
-            os.remove(tmp.name)
-        except OSError:
-            pass
+
+def get_temp(suffix=""):
+    path = Path(tempfile.gettempdir())
+    path.mkdir(exist_ok=True, parents=True)
+    temp = path / (os.urandom(16).hex() + suffix)
+    temp.touch()
+    return temp
 
 
 def cli():

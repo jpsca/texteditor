@@ -4,22 +4,30 @@ Programmatically open the system's editor from your Python program (like [webbro
 
 Unlike other libraries, *TextEditor* makes an effort to find the text editor the users really prefer, specially for those that doesn't know what an `EDITOR` environment variable is.
 
+## Temporal file
+
 ```python
 import texteditor
 
-text = texteditor.open('This is the starting content')
+text = texteditor.open("This is the starting content")
 ```
 
 Opens a temporary file with some content to edit, and returns the new content when
 the user closes the editor.
 
-```python
-text = texteditor.open(filename='README.md')
+## Existing (or new) file
 
-# text = texteditor.open("This will be used instead of the file content", filename='README.md')
+```python
+text = texteditor.open(filename="README.md")
+
+# Warning: By doing the following, you will overwrite the existing content:
+# text = texteditor.open(
+#   text="This will replace the file content",
+#   filename="README.md"
+# )
 ```
 
-You can also edit an existing text file. If the file cannot be opened, an `OSError` is raised.
+You can also edit an existing text file or one you want to create.
 
 
 ## Installation
@@ -32,7 +40,7 @@ python -m pip install texteditor
 
 ## Usage
 
-*texteditor*.**open**(text=None, filename=None, extension='txt', encoding=None)
+*texteditor*.**open**(text=None, filename=None, extension="txt", encoding=None)
 
 Opens `filename` or a new temporary file in the default editor.
 
@@ -64,13 +72,11 @@ If no `$EDITOR` is set, it will try to guess.
 
 On MacOS, it calls the system default for *editing* that file extension.
 
-In other operating systems, the function will search through a *very short* list of known editors, and use the
-first one that founds.
+In other operating systems, the function will search through a *very short* list of known editors, and use the first one that founds.
 
 You might notice that vim and Emacs are not in that short list, that's because:
 
 1. If you are using it, you know what the `EDITOR` variable is, and you probably has set it already.
 2. If you aren't using it, finding yourself in their UI for the first time is going to be super confusing.
-   In fact "How to exit vim" is a common Stack Overflow question. Having to google how to set an EDITOR
-   variable is a less scary alternative.
+   In fact "How to exit vim" is a common Stack Overflow question. Having to google how to set an EDITOR variable is a less scary alternative.
 

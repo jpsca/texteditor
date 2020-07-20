@@ -39,7 +39,7 @@ def test_EDITOR_with_args():
 
 
 def test_EDITOR_with_args_and_spaces():
-    os.environ[EDITOR] = "/path\\ to/myeditor --wait"
+    os.environ[EDITOR] = "/path\\ to/myeditor --wait -n"
     _run = texteditor.run
     texteditor.run = MagicMock()
 
@@ -47,9 +47,24 @@ def test_EDITOR_with_args_and_spaces():
 
     args, kw = texteditor.run.call_args
     cmd = args[0]
-    assert cmd[0] == "/path\\ to/myeditor"
+    assert cmd[0] == "/path to/myeditor"
     assert cmd[1] == "--wait"
+    assert cmd[2] == "-n"
     assert cmd[-1].endswith(".txt")  # the filename
+
+    texteditor.run = _run
+
+
+def test_EDITOR_with_quoted_cmd():
+    os.environ[EDITOR] = '"/path to/myeditor" --wait'
+    _run = texteditor.run
+    texteditor.run = MagicMock()
+
+    texteditor.open()
+
+    args, _ = texteditor.run.call_args
+    cmd = args[0]
+    assert cmd[0] == "/path to/myeditor"
 
     texteditor.run = _run
 
@@ -79,7 +94,7 @@ def test_use_filename():
     args, kw = texteditor.run.call_args
     cmd = args[0]
     assert cmd[0] == "myeditor"
-    assert cmd[-1] == "README.md"  # the filename
+    assert cmd[-1].endswith("README.md")  # the filename
 
     texteditor.run = _run
 
