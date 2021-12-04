@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
+import texteditor
 from texteditor import EDITOR
-from texteditor import main as texteditor
 
 
 def test_EDITOR_used():
@@ -115,8 +115,8 @@ def test_no_editor_available():
     def find_nothing(_):
         return None
 
-    _find_executable = texteditor.find_executable
-    texteditor.find_executable = find_nothing
+    _which = texteditor.which
+    texteditor.which = find_nothing
     _run = texteditor.run
     texteditor.run = MagicMock()
 
@@ -124,5 +124,5 @@ def test_no_editor_available():
     with pytest.raises(RuntimeError):
         texteditor.open()
 
-    texteditor.find_executable = _find_executable
+    texteditor.which = _which
     texteditor.run = _run
