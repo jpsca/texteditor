@@ -5,7 +5,10 @@ import sys
 import tempfile
 from pathlib import Path
 from shutil import which
-from typing import List, Optional, Union
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import List, Optional, Union
 
 
 EDITOR = "EDITOR"
@@ -48,7 +51,7 @@ WINDOWS_EDITORS = COMMON_EDITORS + [
 EDITORS = {"darwin": MACOS_EDITORS, "linux": LINUX_EDITORS, "win": WINDOWS_EDITORS}
 
 
-def get_possible_editors() -> List[str]:
+def get_possible_editors() -> "List[str]":
     sys_platform = sys.platform
 
     for platform in EDITORS:
@@ -58,7 +61,7 @@ def get_possible_editors() -> List[str]:
     return COMMON_EDITORS
 
 
-def get_editor() -> List[str]:
+def get_editor() -> "List[str]":
     cmd = os.getenv(EDITOR)
     if cmd:
         return shlex.split(cmd)
@@ -76,17 +79,17 @@ def get_editor() -> List[str]:
     )
 
 
-def run(cmd: List[str]) -> None:
+def run(cmd: "List[str]") -> None:
     """A separated function for easy testing."""
     proc = subprocess.Popen(cmd, close_fds=True)
     proc.communicate()
 
 
 def open(
-    text: Optional[str] = None,
-    filename: Union[str, Path, None] = None,
+    text: "Optional[str]" = None,
+    filename: "Union[str, Path, None]" = None,
     extension: str = "txt",
-    encoding: Optional[str] = None
+    encoding: "Optional[str]" = None
 ) -> str:
     cmd = get_editor()
 
